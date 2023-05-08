@@ -1,4 +1,5 @@
 import AddTasks from './containers/add-tasks'
+import Home from './containers/home'
 import GlobalStyle, { Container } from './style'
 
 const App = () => {
@@ -6,6 +7,7 @@ const App = () => {
     <Container>
       <GlobalStyle />
       <AddTasks />
+      <Home />
     </Container>
   )
 }
