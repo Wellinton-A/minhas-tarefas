@@ -65,7 +65,7 @@ const AddTasks = () => {
   return (
     <AddTaskPage>
       <AssideContainer>
-        <BackToTaskButton>Back to tasks</BackToTaskButton>
+        <BackToTaskButton to="/">Back to tasks</BackToTaskButton>
       </AssideContainer>
       <AddTasksContainer>
         <AddTasksFormContainer>

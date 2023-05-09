@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+
 import {
   asideBackgroundColor,
   backToTasksBackgroundColor,
@@ -47,7 +49,7 @@ export const TextArea = styled.textarea`
   border: 1px solid ${borderImputColor};
 `
 
-export const BackToTaskButton = styled.button`
+export const BackToTaskButton = styled(Link)`
   max-width: 150px;
   padding: 6px 12px;
   background-color: ${backToTasksBackgroundColor};
@@ -57,6 +59,7 @@ export const BackToTaskButton = styled.button`
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  text-decoration: none;
 `
 
 export const TitleInput = styled.input`

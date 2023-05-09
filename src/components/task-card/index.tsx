@@ -1,8 +1,15 @@
 import { useDispatch } from 'react-redux'
 
+import Button from '../buttons'
 import { Task as TaskType } from '../../containers/add-tasks'
-import { CardContainer } from './taskCard.style'
-import { markAsDid } from '../../store/tasks/tasks.reducer'
+import {
+  ButtonsContainer,
+  CardContainer,
+  CheckboxContainer,
+  H2Done,
+  TagsContainer
+} from './taskCard.style'
+import { markAsDid, removeTask } from '../../store/tasks/tasks.reducer'
 
 interface TaskProps {
   task: TaskType
@@ -16,21 +23,27 @@ const Task = ({ task }: TaskProps) => {
     dispatch(markAsDid(task))
   }
 
+  const handleRemoveTask = () => {
+    dispatch(removeTask(task))
+  }
+
   return (
     <CardContainer>
-      <div>
+      <CheckboxContainer>
         <input onChange={handleMarkAsDid} type="checkbox" />
-        <h2>{title}</h2>
-      </div>
-      <div>
+        {done ? <H2Done>{title}</H2Done> : <h2>{title}</h2>}
+      </CheckboxContainer>
+      <TagsContainer>
         <span>{importance}</span>
         <span>{done ? 'done' : 'pendent'}</span>
-      </div>
+      </TagsContainer>
       <p>{description}</p>
-      <div>
-        <button>Edit</button>
-        <button>Remove</button>
-      </div>
+      <ButtonsContainer>
+        <Button>Edit</Button>
+        <Button buttonType="cancelRemove" onClick={handleRemoveTask}>
+          Remove
+        </Button>
+      </ButtonsContainer>
     </CardContainer>
   )
 }

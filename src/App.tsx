@@ -1,3 +1,5 @@
+import { Routes, Route } from 'react-router-dom'
+
 import AddTasks from './containers/add-tasks'
 import Home from './containers/home'
 import GlobalStyle, { Container } from './style'
@@ -6,8 +8,10 @@ const App = () => {
   return (
     <Container>
       <GlobalStyle />
-      <AddTasks />
-      <Home />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/addTasks" element={<AddTasks />} />
+      </Routes>
     </Container>
   )
 }
