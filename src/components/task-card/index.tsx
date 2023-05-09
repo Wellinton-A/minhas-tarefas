@@ -10,6 +10,7 @@ import {
   TagsContainer
 } from './taskCard.style'
 import { markAsDid, removeTask } from '../../store/tasks/tasks.reducer'
+import Tag from '../tags'
 
 interface TaskProps {
   task: TaskType
@@ -34,8 +35,8 @@ const Task = ({ task }: TaskProps) => {
         {done ? <H2Done>{title}</H2Done> : <h2>{title}</h2>}
       </CheckboxContainer>
       <TagsContainer>
-        <span>{importance}</span>
-        <span>{done ? 'done' : 'pendent'}</span>
+        <Tag tagType={importance}>{importance}</Tag>
+        {done ? <Tag tagType="done">Done</Tag> : <Tag>Pendent</Tag>}
       </TagsContainer>
       <p>{description}</p>
       <ButtonsContainer>

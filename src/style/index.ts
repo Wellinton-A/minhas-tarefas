@@ -11,6 +11,11 @@ export const borderImputColor = '#666666'
 export const saveButtonColor = '#44BD32'
 export const descriptionColorFont = '#8B8B8B'
 export const redButton = '#C23616'
+export const tagPendentColor = '#F0C11A'
+export const tagDoneColor = '#A0D8B3'
+export const tagImportantColor = '#E1A32A'
+export const tagUrgentColor = '#ED2B2A'
+export const tagNormalColor = '#617A55'
 
 const GlobalStyle = createGlobalStyle`
   *{
