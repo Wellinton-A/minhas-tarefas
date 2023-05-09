@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import { addTask } from '../../store/tasks/tasks.reducer'
-import { useSelector, useDispatch } from 'react-redux'
-import { selectTaskList } from '../../store/tasks/tasks.selector'
+import { useDispatch } from 'react-redux'
 
 import {
   AddButton,
@@ -25,7 +24,6 @@ export type Task = {
 }
 
 const AddTasks = () => {
-  const tasksList = useSelector(selectTaskList)
   const dispatch = useDispatch()
   const [importanceSelected, setImportanceSelected] = useState('')
   const [title, setTitle] = useState('')
@@ -57,11 +55,6 @@ const AddTasks = () => {
     setDescription('')
     setImportanceSelected('')
   }
-
-  useEffect(() => {
-    console.log(tasksList)
-  }, [tasksList])
-
   return (
     <AddTaskPage>
       <AssideContainer>

@@ -3,10 +3,14 @@ import { Task } from '../../containers/add-tasks'
 
 interface TaskState {
   taskList: Task[]
+  filteredTasks: Task[]
+  securePointTasks: Task[]
 }
 
 const initialState: TaskState = {
-  taskList: []
+  taskList: [],
+  filteredTasks: [],
+  securePointTasks: []
 }
 
 const taskSlice = createSlice({
@@ -34,9 +38,25 @@ const taskSlice = createSlice({
       state.taskList = state.taskList.filter(
         (task: Task) => task.title !== actions.payload.title
       )
+    },
+    setFilteredTasks(state, actions: PayloadAction<Task[]>) {
+      state.filteredTasks = actions.payload
+    },
+    setSecurePoint(state, actions: PayloadAction<Task[]>) {
+      state.securePointTasks = actions.payload
+    },
+    setTaskList(state, actions: PayloadAction<Task[]>) {
+      state.taskList = actions.payload
     }
   }
 })
 
 export const reducerTask = taskSlice.reducer
-export const { addTask, markAsDid, removeTask } = taskSlice.actions
+export const {
+  addTask,
+  markAsDid,
+  removeTask,
+  setFilteredTasks,
+  setSecurePoint,
+  setTaskList
+} = taskSlice.actions

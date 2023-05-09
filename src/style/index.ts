@@ -16,6 +16,9 @@ export const tagDoneColor = '#A0D8B3'
 export const tagImportantColor = '#E1A32A'
 export const tagUrgentColor = '#ED2B2A'
 export const tagNormalColor = '#617A55'
+export const borderFilterCardColor = '#A1A1A1'
+export const textFilterCardColor = '#5E5E5E'
+export const selectedCardFilter = '#1E90FF'
 
 const GlobalStyle = createGlobalStyle`
   *{

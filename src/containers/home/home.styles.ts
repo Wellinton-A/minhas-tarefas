@@ -1,10 +1,17 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { AssideContainer } from '../add-tasks/addTask.style'
-import { saveButtonColor, textButtonsColor } from '../../style'
+import {
+  borderImputColor,
+  saveButtonColor,
+  textButtonsColor
+} from '../../style'
 
 export const AssideContainerHome = styled(AssideContainer)`
   min-height: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 `
 
 export const TasksContainer = styled.div`
@@ -33,4 +40,23 @@ export const AddTaskButton = styled(Link)`
   align-items: center;
   justify-content: center;
   color: ${textButtonsColor};
+`
+
+export const FilterContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 8px;
+  row-gap: 8px;
+  margin: 0 16px;
+`
+
+export const InputFilter = styled.input`
+  min-width: 192px;
+  height: 32px;
+  padding: 8px;
+  color: ${borderImputColor};
+  font-size: 14px;
+  margin: 24px auto 14px;
+  border: 1px solid ${borderImputColor};
+  border-radius: 8px;
 `
