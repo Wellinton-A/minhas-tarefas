@@ -10,13 +10,16 @@ import {
   TagsContainer
 } from './taskCard.style'
 import { markAsDid, removeTask } from '../../store/tasks/tasks.reducer'
+
 import Tag from '../tags'
+import { useState } from 'react'
 
 interface TaskProps {
   task: TaskType
 }
 
 const Task = ({ task }: TaskProps) => {
+  const [isChecked, setIschecked] = useState(false)
   const { title, description, importance, done } = task
   const dispatch = useDispatch()
 
@@ -26,13 +29,31 @@ const Task = ({ task }: TaskProps) => {
 
   const handleRemoveTask = () => {
     dispatch(removeTask(task))
+    setIschecked(!isChecked)
   }
 
   return (
     <CardContainer>
       <CheckboxContainer>
-        <input onChange={handleMarkAsDid} type="checkbox" />
-        {done ? <H2Done>{title}</H2Done> : <h2>{title}</h2>}
+        {done ? (
+          <>
+            <input
+              checked={!isChecked}
+              onChange={handleMarkAsDid}
+              type="checkbox"
+            />
+            <H2Done>{title}</H2Done>
+          </>
+        ) : (
+          <>
+            <input
+              checked={isChecked}
+              onChange={handleMarkAsDid}
+              type="checkbox"
+            />
+            <h2>{title}</h2>
+          </>
+        )}
       </CheckboxContainer>
       <TagsContainer>
         <Tag tagType={importance}>{importance}</Tag>

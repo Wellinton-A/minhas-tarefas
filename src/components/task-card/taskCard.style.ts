@@ -19,6 +19,10 @@ export const CheckboxContainer = styled.div`
   display: flex;
   margin: 16px;
 
+  input {
+    cursor: pointer;
+  }
+
   h2 {
     font-size: 18px;
     margin-left: 10px;

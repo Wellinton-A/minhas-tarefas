@@ -8,12 +8,17 @@ export const selectTaskList = createSelector(
   (tasks) => tasks.taskList
 )
 
+export const selectSecurePointTasks = createSelector(
+  [selectTasksReducer],
+  (tasks) => tasks.securePointTasks
+)
+
 export const selectFilteredTasks = createSelector(
   [selectTasksReducer],
   (tasks) => tasks.filteredTasks
 )
 
-export const selectSecurePointTasks = createSelector(
+export const selectFilter = createSelector(
   [selectTasksReducer],
-  (tasks) => tasks.securePointTasks
+  (tasks) => tasks.filter
 )

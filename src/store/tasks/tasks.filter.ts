@@ -1,5 +1,5 @@
 import { Task } from '../../containers/add-tasks'
-import { Filter } from '../filter/filter.reducer'
+import { Filter } from '../tasks/tasks.reducer'
 
 export const pendentFilter = (taskList: Task[]): Task[] =>
   taskList.filter((task: Task) => !task.done)

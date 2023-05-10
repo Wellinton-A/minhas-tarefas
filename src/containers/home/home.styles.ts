@@ -4,7 +4,8 @@ import { AssideContainer } from '../add-tasks/addTask.style'
 import {
   borderImputColor,
   saveButtonColor,
-  textButtonsColor
+  textButtonsColor,
+  textFilterCardColor
 } from '../../style'
 
 export const AssideContainerHome = styled(AssideContainer)`
@@ -59,4 +60,11 @@ export const InputFilter = styled.input`
   margin: 24px auto 14px;
   border: 1px solid ${borderImputColor};
   border-radius: 8px;
+`
+
+export const EmptyTaskContainer = styled.div`
+  margin: 40px;
+  font-size: 40px;
+  color: ${textFilterCardColor};
+  font-weight: bold;
 `
