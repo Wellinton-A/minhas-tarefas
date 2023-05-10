@@ -26,7 +26,7 @@ export const H2 = styled.h2`
 `
 
 export const AddTaskButton = styled(Link)`
-  position: absolute;
+  position: fixed;
   bottom: 40px;
   right: 40px;
   min-width: 65px;

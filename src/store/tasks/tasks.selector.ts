@@ -22,3 +22,8 @@ export const selectFilter = createSelector(
   [selectTasksReducer],
   (tasks) => tasks.filter
 )
+
+export const selectInputFilter = createSelector(
+  [selectTasksReducer],
+  (tasks) => tasks.inputFilter
+)

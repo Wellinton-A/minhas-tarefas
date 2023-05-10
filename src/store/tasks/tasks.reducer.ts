@@ -20,13 +20,15 @@ interface TaskState {
   securePointTasks: Task[]
   filteredTasks: Task[]
   filter: Filter[]
+  inputFilter: string
 }
 
 const initialState: TaskState = {
   taskList: [],
   securePointTasks: [],
   filteredTasks: [],
-  filter: filters
+  filter: filters,
+  inputFilter: ''
 }
 
 const taskSlice = createSlice({
@@ -72,8 +74,13 @@ const taskSlice = createSlice({
     },
     setFilters(state, actions: PayloadAction<Filter[]>) {
       state.filter = actions.payload
+    },
+    setFilteredTasks(state, actions: PayloadAction<Task[]>) {
+      state.filteredTasks = actions.payload
+    },
+    setInputFilter(state, actions: PayloadAction<string>) {
+      state.inputFilter = actions.payload
     }
-    // setfilteredTasks(state, actions: PayloadAction<Task[]>) {}
   }
 })
 
@@ -84,5 +91,7 @@ export const {
   removeTask,
   setSecurePoint,
   setTaskList,
-  setFilters
+  setFilters,
+  setFilteredTasks,
+  setInputFilter
 } = taskSlice.actions

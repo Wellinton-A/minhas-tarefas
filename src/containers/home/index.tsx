@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
+  selectFilteredTasks,
+  selectInputFilter,
   selectSecurePointTasks,
   selectTaskList
 } from '../../store/tasks/tasks.selector'
@@ -29,14 +31,18 @@ import {
 import FilterCard from '../../components/filter-card'
 import {
   Filter,
+  setFilteredTasks,
   setFilters,
+  setInputFilter,
   setTaskList
 } from '../../store/tasks/tasks.reducer'
 import { selectFilter } from '../../store/tasks/tasks.selector'
 
 const Home = () => {
+  const inputFilter = useSelector(selectInputFilter)
   const securePointTask: TaskType[] = useSelector(selectSecurePointTasks)
   const tasksList: TaskType[] = useSelector(selectTaskList)
+  const filteredTasksList: TaskType[] = useSelector(selectFilteredTasks)
   const filterList: Filter[] = useSelector(selectFilter)
   const dispatch = useDispatch()
 
@@ -58,7 +64,7 @@ const Home = () => {
       ])
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tasksList])
+  }, [securePointTask])
 
   useEffect(() => {
     const functionFilteredTasks = (): TaskType[] => {
@@ -73,9 +79,7 @@ const Home = () => {
 
     dispatch(setTaskList(functionFilteredTasks()))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterList])
-
-  console.log(tasksList)
+  }, [filterList, filteredTasksList])
 
   const handleFilterText = () => {
     for (let i = 0; i < filterList.length; i++) {
@@ -87,10 +91,33 @@ const Home = () => {
 
   const textFilter = handleFilterText()
 
+  const handleInputFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const filterString = event.target.value.toLowerCase()
+    dispatch(setInputFilter(filterString))
+  }
+
+  useEffect(() => {
+    const filteredTasks: TaskType[] = tasksList.filter((task: TaskType) =>
+      task.title.toLowerCase().match(inputFilter)
+    )
+
+    inputFilter !== ''
+      ? dispatch(setFilteredTasks(filteredTasks))
+      : dispatch(setFilteredTasks([]))
+
+    console.log(filteredTasksList)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputFilter])
+
   return (
     <HomePage>
       <AssideContainerHome>
-        <InputFilter type="text" placeholder="Filter" />
+        <InputFilter
+          onChange={handleInputFilter}
+          type="text"
+          placeholder="Filter"
+          value={inputFilter}
+        />
         <FilterContainer>
           {filterList.map((filterItem: Filter) => (
             <FilterCard key={filterItem.filter} filter={filterItem} />
@@ -104,6 +131,10 @@ const Home = () => {
           </H2>
           {tasksList.length === 0 ? (
             <EmptyTaskContainer>THERE ARE NO TASKS</EmptyTaskContainer>
+          ) : filteredTasksList.length > 0 ? (
+            filteredTasksList.map((task: TaskType) => (
+              <Task key={task.title} task={task} />
+            ))
           ) : (
             tasksList.map((task: TaskType) => (
               <Task key={task.title} task={task} />
