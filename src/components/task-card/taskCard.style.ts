@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { descriptionColorFont, descriptionTaskFont } from '../../style'
+import { PriorityContainer } from '../../containers/add-tasks/addTask.style'
 
 export const CardContainer = styled.div`
   margin: 0 40px 32px 40px;
@@ -42,4 +43,35 @@ export const TagsContainer = styled.div`
 export const ButtonsContainer = styled.div`
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 16px;
+`
+
+export const EditingInput = styled.input`
+  font-size: 18px;
+  margin-left: 10px;
+  border: none;
+  font-weight: bold;
+`
+
+export const EdintingText = styled.span`
+  font-size: 18px;
+  margin-left: 10px;
+`
+export const TextAreaEdinting = styled.textarea`
+  margin: 16px 16px 2px 16px;
+  font-family: ${descriptionTaskFont};
+  color: ${descriptionColorFont};
+  font-size: 14px;
+  resize: none;
+  border: none;
+  padding: 10px;
+`
+
+export const EditingCardContainer = styled(CardContainer)`
+  display: flex;
+  flex-direction: column;
+`
+
+export const PriorityContainerEditing = styled(PriorityContainer)`
+  padding: 10px;
+  margin: 0;
 `

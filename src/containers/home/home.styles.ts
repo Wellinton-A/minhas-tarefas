@@ -15,10 +15,15 @@ export const AssideContainerHome = styled(AssideContainer)`
   flex-direction: column;
 `
 
-export const TasksContainer = styled.div`
+export const TasksContainerMain = styled.div`
   position: relative;
+`
+
+export const TasksContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 80vh;
+  overflow-y: scroll;
 `
 
 export const H2 = styled.h2`
@@ -26,7 +31,7 @@ export const H2 = styled.h2`
 `
 
 export const AddTaskButton = styled(Link)`
-  position: fixed;
+  position: absolute;
   bottom: 40px;
   right: 40px;
   min-width: 65px;

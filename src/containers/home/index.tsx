@@ -1,25 +1,14 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { Task as TaskType } from '../add-tasks'
 import {
   selectFilteredTasks,
   selectInputFilter,
   selectSecurePointTasks,
   selectTaskList
 } from '../../store/tasks/tasks.selector'
-import { Task as TaskType } from '../add-tasks'
-
-import { AddTaskPage as HomePage } from '../add-tasks/addTask.style'
-import Task from '../../components/task-card'
-import {
-  AddTaskButton,
-  AssideContainerHome,
-  EmptyTaskContainer,
-  FilterContainer,
-  H2,
-  InputFilter,
-  TasksContainer
-} from './home.styles'
+import { selectFilter } from '../../store/tasks/tasks.selector'
 import {
   doneFilter,
   filterTaskList,
@@ -28,6 +17,8 @@ import {
   pendentFilter,
   urgentFilter
 } from '../../store/tasks/tasks.filter'
+import { AddTaskPage as HomePage } from '../add-tasks/addTask.style'
+import Task from '../../components/task-card'
 import FilterCard from '../../components/filter-card'
 import {
   Filter,
@@ -36,14 +27,15 @@ import {
   setInputFilter,
   setTaskList
 } from '../../store/tasks/tasks.reducer'
-import { selectFilter } from '../../store/tasks/tasks.selector'
+
+import * as S from './home.styles'
 
 const Home = () => {
   const inputFilter = useSelector(selectInputFilter)
   const securePointTask: TaskType[] = useSelector(selectSecurePointTasks)
   const tasksList: TaskType[] = useSelector(selectTaskList)
-  const filteredTasksList: TaskType[] = useSelector(selectFilteredTasks)
   const filterList: Filter[] = useSelector(selectFilter)
+  const filteredTasksList: TaskType[] = useSelector(selectFilteredTasks)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -66,6 +58,11 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [securePointTask])
 
+  const handleInputFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const filterString = event.target.value.toLowerCase()
+    dispatch(setInputFilter(filterString))
+  }
+
   useEffect(() => {
     const functionFilteredTasks = (): TaskType[] => {
       let newFilteredTasks: TaskType[] = []
@@ -77,9 +74,18 @@ const Home = () => {
       return newFilteredTasks
     }
 
+    dispatch(setFilteredTasks(functionFilteredTasks()))
     dispatch(setTaskList(functionFilteredTasks()))
+
+    const filteredTasks: TaskType[] = filteredTasksList.filter(
+      (task: TaskType) => task.title.toLowerCase().match(inputFilter)
+    )
+
+    inputFilter !== ''
+      ? dispatch(setTaskList(filteredTasks))
+      : dispatch(setTaskList(functionFilteredTasks()))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterList, filteredTasksList])
+  }, [filterList, inputFilter, securePointTask])
 
   const handleFilterText = () => {
     for (let i = 0; i < filterList.length; i++) {
@@ -91,58 +97,43 @@ const Home = () => {
 
   const textFilter = handleFilterText()
 
-  const handleInputFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const filterString = event.target.value.toLowerCase()
-    dispatch(setInputFilter(filterString))
+  const termoFilter = () => {
+    if (inputFilter !== '') {
+      return ' and "Termo"'
+    }
   }
-
-  useEffect(() => {
-    const filteredTasks: TaskType[] = tasksList.filter((task: TaskType) =>
-      task.title.toLowerCase().match(inputFilter)
-    )
-
-    inputFilter !== ''
-      ? dispatch(setFilteredTasks(filteredTasks))
-      : dispatch(setFilteredTasks([]))
-
-    console.log(filteredTasksList)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputFilter])
 
   return (
     <HomePage>
-      <AssideContainerHome>
-        <InputFilter
+      <S.AssideContainerHome>
+        <S.InputFilter
           onChange={handleInputFilter}
           type="text"
           placeholder="Filter"
           value={inputFilter}
         />
-        <FilterContainer>
+        <S.FilterContainer>
           {filterList.map((filterItem: Filter) => (
             <FilterCard key={filterItem.filter} filter={filterItem} />
           ))}
-        </FilterContainer>
-      </AssideContainerHome>
-      <TasksContainer>
-        <div>
-          <H2>
-            {tasksList.length} tasks marked as: {textFilter}
-          </H2>
+        </S.FilterContainer>
+      </S.AssideContainerHome>
+      <S.TasksContainerMain>
+        <S.H2>
+          {tasksList.length} tasks marked as: &quot;{textFilter}&quot;
+          {termoFilter()}
+        </S.H2>
+        <S.TasksContainer>
           {tasksList.length === 0 ? (
-            <EmptyTaskContainer>THERE ARE NO TASKS</EmptyTaskContainer>
-          ) : filteredTasksList.length > 0 ? (
-            filteredTasksList.map((task: TaskType) => (
-              <Task key={task.title} task={task} />
-            ))
+            <S.EmptyTaskContainer>THERE ARE NO TASKS</S.EmptyTaskContainer>
           ) : (
             tasksList.map((task: TaskType) => (
               <Task key={task.title} task={task} />
             ))
           )}
-        </div>
-        <AddTaskButton to="/addTasks"> + </AddTaskButton>
-      </TasksContainer>
+        </S.TasksContainer>
+        <S.AddTaskButton to="/addTasks"> + </S.AddTaskButton>
+      </S.TasksContainerMain>
     </HomePage>
   )
 }

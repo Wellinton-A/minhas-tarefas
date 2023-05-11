@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { addTask } from '../../store/tasks/tasks.reducer'
-import { useDispatch } from 'react-redux'
 
 import {
   AddButton,
@@ -15,12 +15,15 @@ import {
   TextArea,
   TitleInput
 } from './addTask.style'
+import { selectSecurePointTasks } from '../../store/tasks/tasks.selector'
 
 export type Task = {
+  id: number
   title: string
   description: string
   importance: string
   done: boolean
+  editing: boolean
 }
 
 const AddTasks = () => {
@@ -28,6 +31,7 @@ const AddTasks = () => {
   const [importanceSelected, setImportanceSelected] = useState('')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const securePointTasks: Task[] = useSelector(selectSecurePointTasks)
 
   const handletitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)
@@ -44,10 +48,12 @@ const AddTasks = () => {
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault()
     const newTask: Task = {
+      id: securePointTasks.length + 1,
       title,
       description,
       importance: importanceSelected,
-      done: false
+      done: false,
+      editing: false
     }
 
     dispatch(addTask(newTask))

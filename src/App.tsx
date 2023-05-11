@@ -6,13 +6,15 @@ import GlobalStyle, { Container } from './style'
 
 const App = () => {
   return (
-    <Container>
+    <>
       <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/addTasks" element={<AddTasks />} />
-      </Routes>
-    </Container>
+      <Container>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/addTasks" element={<AddTasks />} />
+        </Routes>
+      </Container>
+    </>
   )
 }
 

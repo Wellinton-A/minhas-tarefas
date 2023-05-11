@@ -4,17 +4,13 @@ import {
   setFilters,
   setInputFilter
 } from '../../store/tasks/tasks.reducer'
-import {
-  FilterCardContainer,
-  QuantityFilter,
-  SelectedFilterCardContainer,
-  TextFilter
-} from './filterCard.style'
+import * as S from './filterCard.style'
 import { selectFilter } from '../../store/tasks/tasks.selector'
 import { selectedFilter } from '../../store/tasks/tasks.filter'
 
-type Props = {
+export type Props = {
   filter: Filter
+  selected?: boolean
 }
 
 const FilterCard = ({ filter, ...otherProps }: Props) => {
@@ -27,19 +23,14 @@ const FilterCard = ({ filter, ...otherProps }: Props) => {
   }
 
   return (
-    <>
-      {filter.selected ? (
-        <SelectedFilterCardContainer onClick={handleSelect} {...otherProps}>
-          <QuantityFilter>{filter.quantity}</QuantityFilter>
-          <TextFilter>{filter.filter}</TextFilter>
-        </SelectedFilterCardContainer>
-      ) : (
-        <FilterCardContainer onClick={handleSelect} {...otherProps}>
-          <QuantityFilter>{filter.quantity}</QuantityFilter>
-          <TextFilter>{filter.filter}</TextFilter>
-        </FilterCardContainer>
-      )}
-    </>
+    <S.FilterCardContainer
+      selected={filter.selected}
+      onClick={handleSelect}
+      {...otherProps}
+    >
+      <S.QuantityFilter>{filter.quantity}</S.QuantityFilter>
+      <S.TextFilter>{filter.filter}</S.TextFilter>
+    </S.FilterCardContainer>
   )
 }
 

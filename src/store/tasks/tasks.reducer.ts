@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Task } from '../../containers/add-tasks'
+import { items } from '../../components/task-card/tasks'
 
 export type Filter = {
   quantity: number
@@ -24,8 +25,8 @@ interface TaskState {
 }
 
 const initialState: TaskState = {
-  taskList: [],
-  securePointTasks: [],
+  taskList: items,
+  securePointTasks: items,
   filteredTasks: [],
   filter: filters,
   inputFilter: ''
@@ -48,22 +49,38 @@ const taskSlice = createSlice({
     },
     markAsDid(state, actions: PayloadAction<Task>) {
       state.taskList = state.taskList.map((task: Task) =>
-        task.title === actions.payload.title
-          ? { ...task, done: !task.done }
+        task.id === actions.payload.id ? { ...task, done: !task.done } : task
+      )
+      state.securePointTasks = state.securePointTasks.map((task: Task) =>
+        task.id === actions.payload.id ? { ...task, done: !task.done } : task
+      )
+    },
+    markAsEditing(state, actions: PayloadAction<Task>) {
+      state.taskList = state.taskList.map((task: Task) =>
+        task.id === actions.payload.id
+          ? { ...task, editing: !task.editing }
           : task
       )
       state.securePointTasks = state.securePointTasks.map((task: Task) =>
-        task.title === actions.payload.title
-          ? { ...task, done: !task.done }
+        task.id === actions.payload.id
+          ? { ...task, editing: !task.editing }
           : task
       )
     },
     removeTask(state, actions: PayloadAction<Task>) {
       state.taskList = state.taskList.filter(
-        (task: Task) => task.title !== actions.payload.title
+        (task: Task) => task.id !== actions.payload.id
       )
       state.securePointTasks = state.securePointTasks.filter(
-        (task: Task) => task.title !== actions.payload.title
+        (task: Task) => task.id !== actions.payload.id
+      )
+    },
+    editedTasks(state, actions: PayloadAction<Task>) {
+      state.taskList = state.taskList.map((task: Task) =>
+        task.id === actions.payload.id ? actions.payload : task
+      )
+      state.securePointTasks = state.securePointTasks.map((task: Task) =>
+        task.id === actions.payload.id ? actions.payload : task
       )
     },
     setSecurePoint(state, actions: PayloadAction<Task[]>) {
@@ -93,5 +110,7 @@ export const {
   setTaskList,
   setFilters,
   setFilteredTasks,
-  setInputFilter
+  setInputFilter,
+  markAsEditing,
+  editedTasks
 } = taskSlice.actions
